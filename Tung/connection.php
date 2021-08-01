@@ -1,6 +1,6 @@
 <?php
 /**
-Tao class Db de ket noi voi co so du lieu
+Create Database class
 */
 class Db
 {
@@ -10,7 +10,7 @@ class Db
 	private static $dbPwd = "";
 	public static $instance = null;
 
-	// Khoi tao ket noi den csdl va gan vao bien instance sau do tra ve
+	// Start DB connection
 	public static function GetInstance(){
 
 		if(!self::$instance) {
