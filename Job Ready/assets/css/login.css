@@ -24,8 +24,10 @@ button {
   margin: 12px 0 6px 0;
 }
 
-/* adjust the login icon image */
-img.loginicon {
-  width: 10%;
-  border-radius: 10%;
+/* for login container */
+.content {
+  width: 40%;
+  margin: auto;
+  margin-top: 100px;
 }
+
