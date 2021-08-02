@@ -267,6 +267,8 @@
                               type="text"
                               class="form-control"
                               placeholder="Enter keywords"
+							  id="myFilterCandidates"
+							  onkeyup="filterCandidates()"
                             />
                           </div>
                         </div>
@@ -310,7 +312,27 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row">
+					  <!-- search function -->
+						<script>
+							function filterCandidates() {
+								var input, filter, cards, cardContainer, h4, title, i;
+								input = document.getElementById("myFilterCandidates");
+								filter = input.value.toUpperCase();
+								cardContainer = document.getElementById("myCandidateItems");
+								cards = cardContainer.getElementsByClassName("card-can");
+								
+								for (i = 0; i < cards.length; i++) {
+								        title = cards[i].querySelector(".card-can h4.card-title");
+								        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+								            cards[i].style.display = "";
+								        } else {
+								            cards[i].style.display = "none";
+								        }
+								    }
+							}
+						</script>
+						<!-- end of search function -->
+                      <div class="row" id="myCandidateItems">
                         <div class="col-md-12 candidate-list">
                           <div class="col-md-6">
                             <div class="card card-can">
