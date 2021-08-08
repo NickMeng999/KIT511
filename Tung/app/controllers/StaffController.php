@@ -7,6 +7,8 @@ class StaffController
      */
     public function profile()
     {
+        $jobTypes = JobTypeModel::getAll();
+
         include "./app/views/staff/profile.php";
     }
 
@@ -17,10 +19,23 @@ class StaffController
      */
     public function getDataProfile()
     {
-        $id = $_SESSION['student_id'];
+        $id = $_SESSION['staff_id'];
         $staff = StaffModel::GetOne($id);
 
-        return $staff;
+        header('Access-Control-Allow-Origin: *');
+        header('Content-type: application/json');
+        if (!empty($staff)) {
+            echo json_encode([
+                'status' => true,
+                'info' => $staff,
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'err' => 'This staff is unavailable',
+            ]);
+        }
+        exit();
     }
 
     /**
@@ -28,36 +43,49 @@ class StaffController
      */
     public function login()
     {
-        if (isset($_POST['txtUsername'])) {
-            $u = $_POST['txtUsername'];
-        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['user_name'])) {
+                $u = $_POST['user_name'];
+            }
 
-        if (isset($_POST['txtPassword'])) {
-            $p = $_POST['txtPassword'];
-        }
+            if (isset($_POST['password'])) {
+                $p = $_POST['password'];
+            }
 
-        if (isset($u) && isset($p)) {
-            $staff = StaffModel::login($u, $p);
-        }
+            if (isset($u) && isset($p)) {
+                $staff = StaffModel::login($u, $p);
+            }
 
-        if (isset($staff)) {
-            if (count($staff) > 0) {
-                $_SESSION["username"] = $_POST['txtUsername'];
-                $_SESSION["id"] = $staff->id;
-                header("location:?ctr=Staff&action=profile");
+            if (!empty($staff)) {
+                $_SESSION["staff_name"] = $_POST['user_name'];
+                $_SESSION["staff_id"] = $staff->id;
+
+                header('Access-Control-Allow-Origin: *');
+                header('Content-type: application/json');
+                echo json_encode([
+                    'status' => true,
+                    'err' => '',
+                ]);
+                exit();
             } else {
-                $err = "";
+                header('Access-Control-Allow-Origin: *');
+                header('Content-type: application/json');
+                echo json_encode([
+                    'status' => false,
+                    'err' => 'This staff is unavailable',
+                ]);
+                exit();
             }
         } else {
-            $err = "This user is unavailable";
+            include './app/views/staff/login.php';
         }
-        include './app/views/login.php';
     }
 
     public function logout()
     {
-        session_destroy();
-        header("location:?ctr=Staff&action=login");
+        unset ($_SESSION["staff_name"]);
+        unset ($_SESSION["staff_id"]);
+        header("location:?ctr=Student&action=home");
     }
 
     public function notFound(){

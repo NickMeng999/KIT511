@@ -95,7 +95,7 @@
                         class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="navbarDropdownMenuLink2"
                     >
-                        <a class="dropdown-item" href="?ctr=Student&action=logout">Logout</a>
+                        <a class="dropdown-item" href="?ctr=<?php echo isset($_SESSION['username']) ? 'Student' : 'Staff' ?>&action=logout">Logout</a>
                     </div>
                 </li>
             </ul>

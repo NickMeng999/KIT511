@@ -52,11 +52,11 @@ class StudentModel
     }
 
     /**
-     *    Get record from database using ID
+     *    Hàm lấy 1 bản ghi từ csdl với id truyền vào
      */
     public static function GetOne($id)
     {
-        $db = Db::GetInstance(); // Get connection to database from Db object (in file connection.php)
+        $db = Db::GetInstance(); // Lấy kết nối đến db từ đối tượng Db (nằm trong file connection.php)
         $stmt = $db->prepare("
 				select 	st.id as id,
 						st.company as company,

@@ -2,11 +2,20 @@
 
 class StudentController
 {
+    public function home()
+    {
+        include "./app/views/student/home.php";
+    }
+
     /**
      * View student profile
      */
     public function profile()
     {
+        $jobs = JobModel::getByJobType();
+        $jobInterns = JobModel::getByJobType(2);
+        $jobTypes = JobTypeModel::getAll();
+
         include "./app/views/student/profile.php";
     }
 
@@ -80,8 +89,9 @@ class StudentController
 
     public function logout()
     {
-        session_destroy();
-        header("location:?ctr=Student&action=login");
+        unset ($_SESSION["username"]);
+        unset ($_SESSION["student_id"]);
+        header("location:?ctr=Student&action=home");
     }
 
     public function notFound(){

@@ -54,18 +54,22 @@
             </div>
         </div>
         <ul class="nav">
+            <?php if (isset($_SESSION['username'])): ?>
             <li>
                 <a href="?ctr=Student&action=profile">
                     <i class="now-ui-icons design_app"></i>
                     <p>Student Career Portal</p>
                 </a>
             </li>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['staff_name'])): ?>
             <li>
-                <a href="./employer-portal.html">
+                <a href="?ctr=Staff&action=profile">
                     <i class="now-ui-icons business_briefcase-24"></i>
                     <p>Employer Career Portal</p>
                 </a>
             </li>
+            <?php endif; ?>
             <li class="active">
                 <a data-toggle="collapse" href="#formsExamples" aria-expanded="true">
                     <i class="now-ui-icons files_single-copy-04"></i>

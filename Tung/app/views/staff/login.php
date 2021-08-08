@@ -3,7 +3,7 @@ include "./app/views/header.php";
 ?>
 
 <?php
-if (!isset($_SESSION["username"])) {
+if (!isset($_SESSION["staff"])) {
 ?>
 <div class="loginBox">
         <div class="loginHead">
@@ -12,7 +12,7 @@ if (!isset($_SESSION["username"])) {
 
         <form style="max-width: 284px;
     margin: 0 auto;">
-            <h2>Student</h2>
+            <h2>Staff</h2>
             <span id="login_err">
         </span>
             <div class="control-group">
@@ -34,7 +34,7 @@ if (!isset($_SESSION["username"])) {
     $(document).ready(function(){
         $(".btn-login").click(function(){
             $.ajax({
-                url: "?ctr=Student&action=login",
+                url: "?ctr=Staff&action=login",
                 type: "post",
                 data: {
                     'user_name' : $('input[name=txtUsername]').val(),
@@ -43,7 +43,7 @@ if (!isset($_SESSION["username"])) {
                 dataType : 'json',
                 success: function (data) {
                     if (data.status) {
-                        window.location.href = "?ctr=Student&action=profile";
+                        window.location.href = "?ctr=Staff&action=profile";
                     } else {
                         $('#login_err').empty();
                         $('#login_err').append(data.err);
