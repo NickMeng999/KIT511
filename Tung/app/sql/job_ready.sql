@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2021 at 05:19 AM
+-- Generation Time: Aug 15, 2021 at 10:20 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -37,6 +37,13 @@ CREATE TABLE `education` (
   `start_year` int(11) NOT NULL,
   `end_year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `education`
+--
+
+INSERT INTO `education` (`id`, `student_id`, `school`, `degree`, `field_of_study`, `grade`, `start_year`, `end_year`) VALUES
+(4, 1, 'giao thong', 'master', 'infomation techonogy', 5, 2013, 2017);
 
 -- --------------------------------------------------------
 
@@ -130,7 +137,7 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `business_name`, `business_phone`, `user_name`, `email`, `role`, `first_name`, `last_name`, `address`, `city`, `country`, `postal_code`, `description`, `password`) VALUES
-(1, 'Creative Code Inc.', '0123456789', 'duystaff12', 'duy123@gmail.com', 'manager', 'Duy', 'Bui', '259 Phu Dien', 'Bac Tu Niem', 'Ha Noi', '00001', 'The best business in the world, making the best things in the world ', 'e10adc3949ba59abbe56e057f20f883e');
+(1, 'Creative Code Inc.', '0123456744', 'duystaff12', 'duy3@gmail.com', 'manager', 'Duy', 'Bui', '259 Phu Dien', 'Bac Tu Niem', 'Ha Noi', '00001', 'The best business in the world, making the best things in the world ', 'e10adc3949ba59abbe56e057f20f883e');
 
 -- --------------------------------------------------------
 
@@ -152,16 +159,18 @@ CREATE TABLE `student` (
   `country` varchar(100) NOT NULL,
   `postal_code` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
-  `resume` text DEFAULT NULL
+  `resume` text DEFAULT NULL,
+  `experience` int(11) NOT NULL,
+  `work_in_australia` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`id`, `company`, `position`, `user_name`, `password`, `email`, `first_name`, `last_name`, `address`, `city`, `country`, `postal_code`, `description`, `resume`) VALUES
-(1, 'sotatek', 'frontend developer', 'thanhtung123', 'e10adc3949ba59abbe56e057f20f883e', 'thanhtung123@gmail.com', 'Tung', 'Thanh', 'Habel', 'Habel', 'Autralia', '5556', 'I am Thanh Tung.\r\nI am 25 age.', NULL),
-(2, 'bidgear', 'php developer', 'thanhtung4545', 'e10adc3949ba59abbe56e057f20f883e', 'thanhtung4545@gmail.com', 'quang', 'diu', 'Habel', 'Habel', 'Autralia', '5556', 'I am Duy.\r\nI am 25 age.', NULL);
+INSERT INTO `student` (`id`, `company`, `position`, `user_name`, `password`, `email`, `first_name`, `last_name`, `address`, `city`, `country`, `postal_code`, `description`, `resume`, `experience`, `work_in_australia`) VALUES
+(1, 'sotatek', 'frontend developer', 'thanhtung123', 'e10adc3949ba59abbe56e057f20f883e', 'tung@123gmail.com', 'Tung', 'Thanh', 'Habel', 'Habel', 'Autralia', '123445', 'I am Thanh Tung.\r\nI am 25 age.', NULL, 2, 0),
+(2, 'bidgear', 'php developer', 'thanhtung4545', 'e10adc3949ba59abbe56e057f20f883e', 'thanhtung4545@gmail.com', 'quang', 'diu', 'Habel', 'Habel', 'Autralia', '5556', 'I am Duy.\r\nI am 25 age.', NULL, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -238,7 +247,7 @@ ALTER TABLE `student_job`
 -- AUTO_INCREMENT for table `education`
 --
 ALTER TABLE `education`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `job`

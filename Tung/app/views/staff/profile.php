@@ -45,10 +45,10 @@ include "./app/views/sidebar.php";
                                 <div class="row">
                                     <div class="col-md-1 pr-1"></div>
                                     <div class="col-md-3 pr-1">
-                                        <div class="form-group">
-                                            <label>Keywords</label>
-                                            <input type="text" class="form-control" placeholder="Enter keywords">
-                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Keywords</label>-->
+<!--                                            <input type="text" class="form-control" placeholder="Enter keywords">-->
+<!--                                        </div>-->
                                     </div>
                                     <div class="col-md-3 pr-1">
                                         <div class="form-group">
@@ -116,7 +116,7 @@ include "./app/views/sidebar.php";
                                                         <div class="col-md-4 pl-1">
                                                             <div class="form-group">
                                                                 <label for="role">Role</label>
-                                                                <input type="text" class="form-control" name="role" placeholder="Role" value="">
+                                                                <input type="text" class="form-control" name="role" placeholder="Role" value="" disabled>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -182,6 +182,7 @@ include "./app/views/sidebar.php";
                                                 <button class="btn btn-primary">
                                                     Submit Profile For Verification
                                                 </button>
+                                                <a href="javascript:void(0)" onclick="updateProfileStaff()" class="btn btn-primary">Update</a>
                                             </div>
                                         </div>
                                     </div>
@@ -387,5 +388,81 @@ include "./app/views/sidebar.php";
             page = parseInt(page) + 1;
         }
         changePage(page);
+    }
+
+    function updateProfileStaff() {
+        var business_name = $('input[name=business_name]').val();
+        var business_phone = $('input[name=business_phone]').val();
+        var user_name = $('input[name=user_name]').val();
+        var email = $('input[name=email]').val();
+        var first_name = $('input[name=first_name]').val();
+        var last_name = $('input[name=last_name]').val();
+        var address = $('input[name=address]').val();
+        var city = $('input[name=city]').val();
+        var country = $('input[name=country]').val();
+        var postal_code = $('input[name=postal_code]').val();
+
+        $.ajax({
+            url: "?ctr=Staff&action=updateProfile",
+            type: "post",
+            data: {
+                'business_name' : business_name,
+                'business_phone' : business_phone,
+                'user_name' : user_name,
+                'email' : email,
+                'first_name' : first_name,
+                'last_name' : last_name,
+                'address' : address,
+                'city' : city,
+                'country' : country,
+                'postal_code' : postal_code
+            } ,
+            dataType : 'json',
+            success: function (data) {
+                if (data.status) {
+                    alert('Update staff ok!');
+                } else {
+                    var err = '';
+
+                    for (const [key, value] of Object.entries(data.err)) {
+                        err += value + "\n";
+                    }
+
+                    alert(err);
+                }
+            }
+        });
+    }
+
+    function shortList(e) {
+        $.ajax({
+            url: "?ctr=Job&action=shortList",
+            type: "post",
+            data: {
+                'id' : e,
+            } ,
+            dataType : 'json',
+            success: function (data) {
+                if (data.status) {
+                    changePage();
+                }
+            }
+        });
+    }
+
+    function notSuitable(e) {
+        $.ajax({
+            url: "?ctr=Job&action=notSuitable",
+            type: "post",
+            data: {
+                'id' : e,
+            } ,
+            dataType : 'json',
+            success: function (data) {
+                if (data.status) {
+                    changePage();
+                }
+            }
+        });
     }
 </script>

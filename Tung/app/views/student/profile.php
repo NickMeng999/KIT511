@@ -309,7 +309,7 @@ include "./app/views/sidebar.php";
                                                                     data-target="#myModal"
                                                                     onclick="return false;"
                                                                 >
-                                                                    Add
+                                                                    <?php echo $checkEducation ? 'View' : 'Add' ?>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -339,7 +339,7 @@ include "./app/views/sidebar.php";
                                                                             ></i>
                                                                         </button>
                                                                         <h4 class="title title-up">
-                                                                            Add education
+                                                                            <?php echo $checkEducation ? 'Change' : 'Add' ?> education
                                                                         </h4>
                                                                     </div>
                                                                     <div class="modal-body">
@@ -350,29 +350,33 @@ include "./app/views/sidebar.php";
                                                                                     <input
                                                                                         type="text"
                                                                                         class="form-control"
+                                                                                        name="school"
                                                                                         placeholder="School name"
-                                                                                        value="University of Tasmania"
+                                                                                        value="<?php echo !empty($education) ? $education->school : '' ?>"
                                                                                     />
                                                                                     <label>Degree</label>
                                                                                     <input
                                                                                         type="text"
                                                                                         class="form-control"
+                                                                                        name="degree"
                                                                                         placeholder="Degree"
-                                                                                        value="Master"
+                                                                                        value="<?php echo !empty($education) ? $education->degree : '' ?>"
                                                                                     />
                                                                                     <label>Field of study</label>
                                                                                     <input
                                                                                         type="text"
                                                                                         class="form-control"
+                                                                                        name="field_of_study"
                                                                                         placeholder="Field of study"
-                                                                                        value="Information Technology"
+                                                                                        value="<?php echo !empty($education) ? $education->field_of_study : '' ?>"
                                                                                     />
                                                                                     <label>Grade</label>
                                                                                     <input
                                                                                         type="number"
                                                                                         class="form-control"
+                                                                                        name="grade"
                                                                                         placeholder="Grade"
-                                                                                        value="4.0"
+                                                                                        value="<?php echo !empty($education) ? $education->grade : '' ?>"
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -384,8 +388,9 @@ include "./app/views/sidebar.php";
                                                                                     <input
                                                                                         type="text"
                                                                                         class="form-control"
+                                                                                        name="start_year"
                                                                                         placeholder="Start Year"
-                                                                                        value=""
+                                                                                        value="<?php echo !empty($education) ? $education->start_year : '' ?>"
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -395,27 +400,29 @@ include "./app/views/sidebar.php";
                                                                                     <input
                                                                                         type="text"
                                                                                         class="form-control"
+                                                                                        name="end_year"
                                                                                         placeholder="End Year"
-                                                                                        value=""
+                                                                                        value="<?php echo !empty($education) ? $education->end_year : '' ?>"
                                                                                     />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button
-                                                                            type="button"
+                                                                        <a
+                                                                                onclick="removeEducation()"
+                                                                                style="color: #ffffff"
                                                                             class="btn btn-default"
                                                                         >
                                                                             Delete
-                                                                        </button>
-                                                                        <button
-                                                                            type="button"
+                                                                        </a>
+                                                                        <a
+                                                                            onclick="changeEducation()"
+                                                                            style="color: #ffffff"
                                                                             class="btn btn-primary"
-                                                                            data-dismiss="modal"
                                                                         >
-                                                                            Save
-                                                                        </button>
+                                                                            <?php echo $checkEducation ? 'Change' : 'Save' ?>
+                                                                        </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -442,7 +449,7 @@ include "./app/views/sidebar.php";
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-3 offset-md-9">
-                                                            <a href="#" class="btn btn-primary">Update profile</a>
+                                                            <a href="javascript:void(0)" onclick="updateProfile()" class="btn btn-primary">Update profile</a>
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -760,5 +767,106 @@ include "./app/views/sidebar.php";
             page = parseInt(page) + 1;
         }
         changePageIntern(page);
+    }
+
+    function updateProfile() {
+        var userName = $('input[name=username]').val();
+        var email = $('input[name=email]').val();
+        var first_name = $('input[name=first_name]').val();
+        var last_name = $('input[name=last_name]').val();
+        var address = $('input[name=address]').val();
+        var city = $('input[name=city]').val();
+        var country = $('input[name=country]').val();
+        var code = $('input[name=code]').val();
+
+        $.ajax({
+            url: "?ctr=Student&action=updateProfile",
+            type: "post",
+            data: {
+                'user_name' : userName,
+                'email' : email,
+                'first_name' : first_name,
+                'last_name' : last_name,
+                'address' : address,
+                'city' : city,
+                'country' : country,
+                'postal_code' : code
+            } ,
+            dataType : 'json',
+            success: function (data) {
+                if (data.status) {
+                    alert('Update student ok!');
+                } else {
+                    var err = '';
+
+                    for (const [key, value] of Object.entries(data.err)) {
+                        err += value + "\n";
+                    }
+
+                    alert(err);
+                }
+            }
+        });
+    }
+
+    function changeEducation() {
+        var school = $('input[name=school]').val();
+        var degree = $('input[name=degree]').val();
+        var field_of_study = $('input[name=field_of_study]').val();
+        var grade = $('input[name=grade]').val();
+        var start_year = $('input[name=start_year]').val();
+        var end_year = $('input[name=end_year]').val();
+
+        $.ajax({
+            url: "?ctr=Student&action=changeEducation",
+            type: "post",
+            data: {
+                'school' : school,
+                'degree' : degree,
+                'field_of_study' : field_of_study,
+                'grade' : grade,
+                'start_year' : start_year,
+                'end_year' : end_year
+            } ,
+            dataType : 'json',
+            success: function (data) {
+                if (data.status) {
+                    alert('Update education ok!');
+                    $('#myModal').modal('hide');
+                } else {
+                    var err = '';
+
+                    for (const [key, value] of Object.entries(data.err)) {
+                        err += value + "\n";
+                    }
+
+                    alert(err);
+                }
+            }
+        });
+    }
+
+    function removeEducation() {
+
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                url: "?ctr=Student&action=removeEducation",
+                type: "post",
+                data: {} ,
+                dataType : 'json',
+                success: function (data) {
+                    if (data.status) {
+                        alert('Remove education ok!');
+                        $('#myModal').modal('hide');
+                        $('input[name=school]').val('');
+                        $('input[name=degree]').val('');
+                        $('input[name=field_of_study]').val('');
+                        $('input[name=grade]').val('');
+                        $('input[name=start_year]').val('');
+                        $('input[name=end_year]').val('');
+                    }
+                }
+            });
+        }
     }
 </script>

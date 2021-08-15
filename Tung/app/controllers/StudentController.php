@@ -15,6 +15,8 @@ class StudentController
         $jobs = JobModel::getByJobType();
         $jobInterns = JobModel::getByJobType(2);
         $jobTypes = JobTypeModel::getAll();
+        $checkEducation = EducationModel::checkEducationStudent($_SESSION['student_id']);
+        $education = EducationModel::getByStudent($_SESSION['student_id']);
 
         include "./app/views/student/profile.php";
     }
@@ -85,6 +87,84 @@ class StudentController
         } else {
             include './app/views/student/login.php';
         }
+    }
+
+    /**
+     * update student
+     */
+    public function updateProfile()
+    {
+        $data = $_POST;
+        $err = [];
+
+        if (empty($data['user_name'])) $err['user_name'] = "User name is not empty";
+        if (empty($data['email'])) $err['email'] = "Email is not empty";
+        if (empty($data['first_name'])) $err['first_name'] = "First name is not empty";
+        if (empty($data['last_name'])) $err['last_name'] = "Last name is not empty";
+        if (empty($data['address'])) $err['address'] = "Address name is not empty";
+        if (empty($data['city'])) $err['city'] = "City name is not empty";
+        if (empty($data['country'])) $err['country'] = "Country name is not empty";
+        if (empty($data['postal_code'])) $err['postal_code'] = "Postal code name is not empty";
+
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $err['email'] = "Invalid email format";
+        }
+
+        if (empty($err)) {
+            StudentModel::updateProfile($data);
+
+            echo json_encode([
+                'status' => true,
+                'err' => '',
+            ]);
+            exit();
+        } else {
+            echo json_encode([
+                'status' => false,
+                'err' => $err,
+            ]);
+            exit();
+        }
+    }
+
+    public function changeEducation()
+    {
+        $data = $_POST;
+        $err = [];
+
+        if (empty($data['school'])) $err['school'] = "School is not empty";
+        if (empty($data['degree'])) $err['degree'] = "Degree is not empty";
+        if (empty($data['field_of_study'])) $err['field_of_study'] = "Field of study is not empty";
+        if (empty($data['grade'])) $err['grade'] = "Grade is not empty";
+        if (empty($data['start_year'])) $err['start_year'] = "Start year is not empty";
+        if (empty($data['end_year'])) $err['end_year'] = "End year is not empty";
+
+        if (empty($err)) {
+            EducationModel::changeEducation($data);
+
+            echo json_encode([
+                'status' => true,
+                'err' => '',
+            ]);
+            exit();
+        } else {
+            echo json_encode([
+                'status' => false,
+                'err' => $err,
+            ]);
+            exit();
+        }
+    }
+
+    public function removeEducation()
+    {
+        EducationModel::remove();
+
+        echo json_encode([
+            'status' => true,
+            'err' => '',
+        ]);
+        exit();
     }
 
     public function logout()

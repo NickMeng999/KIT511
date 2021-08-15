@@ -16,17 +16,19 @@
                     <button class="btn btn-outline-success btn-round btn-icon">
                         <i class="now-ui-icons ui-1_check"></i>
                     </button>
-                    4 years of experience
-                    <button class="ml-3 btn btn-outline-success btn-round btn-icon">
-                        <i class="now-ui-icons ui-1_check"></i>
-                    </button>
-                    Right to work in Australia
+                    <?php echo $item['experience'] ?> years of experience
                 </h6>
                 <h6>
-                    <button class="btn btn-outline-danger btn-round btn-icon">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    <?php if ($item['work_in_australia']): ?>
+                    <button class="btn btn-outline-success btn-round btn-icon">
+                        <i class="now-ui-icons ui-1_check"></i>
                     </button>
-                    Driver license
+                    <?php else: ?>
+                        <button class="btn btn-outline-danger btn-round btn-icon">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </button>
+                    <?php endif; ?>
+                    Right to work in Australia
                 </h6>
             </div>
             <div class="card-footer">
@@ -39,14 +41,14 @@
                     </button>
                 </div>
                 <div class="btn-group pull-right">
-                    <button class="btn btn-outline-success">
+                    <a onclick="shortList(<?php echo $item['id'] ?>)" class="btn btn-outline-success">
                         <i class="now-ui-icons ui-1_check"></i>
                         Short list
-                    </button>
-                    <button class="btn btn-outline-danger ml-2">
+                    </a>
+                    <a onclick="notSuitable(<?php echo $item['id'] ?>)" class="btn btn-outline-danger ml-2">
                         <i class="now-ui-icons ui-1_simple-remove"></i>
                         Not suitable
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

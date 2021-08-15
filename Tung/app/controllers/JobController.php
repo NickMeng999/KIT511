@@ -162,6 +162,28 @@ class JobController
 
         include './app/views/job/detail.php';
     }
+
+    public function shortList()
+    {
+        $id = $_POST['id'];
+
+        JobModel::shortList($id);
+
+        echo json_encode([
+            'status' => true
+        ]);
+    }
+
+    public function notSuitable()
+    {
+        $id = $_POST['id'];
+
+        JobModel::notSuitable($id);
+
+        echo json_encode([
+            'status' => true
+        ]);
+    }
 }
 
 ?>

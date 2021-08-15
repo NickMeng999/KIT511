@@ -19,6 +19,8 @@ class StudentModel
     public $postal_code;
     public $description;
     public $resume;
+    public $experience;
+    public $work_in_australia;
 
     function __construct($id = null,
                          $company = null,
@@ -33,7 +35,9 @@ class StudentModel
                          $country = null,
                          $postal_code = null,
                          $description = null,
-                         $resume = null)
+                         $resume = null,
+                         $experience = null,
+                        $work_in_australia = null)
     {
         $this->id = $id;
         $this->company = $company;
@@ -49,6 +53,8 @@ class StudentModel
         $this->postal_code = $postal_code;
         $this->description = $description;
         $this->resume = $resume;
+        $this->experience = $experience;
+        $this->work_in_australia = $work_in_australia;
     }
 
     /**
@@ -124,6 +130,36 @@ class StudentModel
         }
 
         return $result;
+    }
+
+    public static function updateProfile($data)
+    {
+        $db = Db::GetInstance();
+
+            $stmt = $db->prepare("
+				update 	student 
+				set 	user_name 		= :user_name, 
+						email 		= :email, 
+						first_name     = :first_name,
+						last_name 		= :last_name, 
+						address = :address,
+						city 		= :city,
+						country		= :country,
+						postal_code 	= :postal_code
+				where 	id 			= :id
+			");
+
+        $stmt->bindParam(':id', $_SESSION['student_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':user_name', $data['user_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+        $stmt->bindParam(':first_name', $data['first_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':last_name', $data['last_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':address', $data['address'], PDO::PARAM_STR);
+        $stmt->bindParam(':city', $data['city'], PDO::PARAM_STR);
+        $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR);
+        $stmt->bindParam(':postal_code', $data['postal_code'], PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
     }
 }
 

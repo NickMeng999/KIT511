@@ -124,6 +124,40 @@ class StaffModel
 
         return $result;
     }
+
+    public static function updateProfile($data)
+    {
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+				update 	staff 
+				set 	business_name 		= :business_name, 
+						business_phone 		= :business_phone, 
+						user_name     = :user_name,
+						email 		= :email, 
+						first_name = :first_name,
+						last_name 		= :last_name,
+						address		= :address,
+						city 	= :city,
+						country 	= :country,
+						postal_code 	= :postal_code 
+				where 	id 			= :id
+			");
+
+        $stmt->bindParam(':id', $_SESSION['staff_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':business_name', $data['business_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':business_phone', $data['business_phone'], PDO::PARAM_STR);
+        $stmt->bindParam(':user_name', $data['user_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+        $stmt->bindParam(':first_name', $data['first_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':last_name', $data['last_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':address', $data['address'], PDO::PARAM_STR);
+        $stmt->bindParam(':city', $data['city'], PDO::PARAM_STR);
+        $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR);
+        $stmt->bindParam(':postal_code', $data['postal_code'], PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    }
 }
 
 ?>

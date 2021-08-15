@@ -186,13 +186,16 @@ class JobModel
         $sql = "
 				select st.first_name as first_name,
 				    st.last_name as last_name,
+				    st.experience as experience,
+				    st.work_in_australia as work_in_australia,
+				    sj.id as id,
 				    j.title as title
 				from student_job as sj 
 				INNER JOIN job as j 
                 ON sj.job_id = j.id 
                 INNER JOIN student as st 
                 ON st.id = sj.student_id 
-				where j.staff_id = {$staffId} 
+				where j.staff_id = {$staffId} and sj.status_approve = 0 
 			";
 
         if (!empty($jobType)) {
@@ -256,6 +259,48 @@ class JobModel
         }
 
         return $result;
+    }
+
+    /**
+     * short list then status approve is 1
+     *
+     * @param $id
+     * @return bool
+     */
+    public static function shortList($id)
+    {
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+				update 	student_job 
+				set 	status_approve 		= 1 
+				where 	id 			= :id
+			");
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    }
+
+    /**
+     * short list then status approve is 2
+     *
+     * @param $id
+     * @return bool
+     */
+    public static function notSuitable($id)
+    {
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+				update 	student_job 
+				set 	status_approve 		= 2 
+				where 	id 			= :id
+			");
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
     }
 }
 
