@@ -137,7 +137,7 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `business_name`, `business_phone`, `user_name`, `email`, `role`, `first_name`, `last_name`, `address`, `city`, `country`, `postal_code`, `description`, `password`) VALUES
-(1, 'Creative Code Inc.', '0123456744', 'duystaff12', 'duy3@gmail.com', 'manager', 'Duy', 'Bui', '259 Phu Dien', 'Bac Tu Niem', 'Ha Noi', '00001', 'The best business in the world, making the best things in the world ', 'e10adc3949ba59abbe56e057f20f883e');
+(1, 'Creative Code Inc.', '0123456744', 'thanhtungadmin', 'duy3@gmail.com', 'manager', 'Duy', 'Bui', '259 Phu Dien', 'Bac Tu Niem', 'Ha Noi', '00001', 'The best business in the world, making the best things in the world ', 'e10adc3949ba59abbe56e057f20f883e');
 
 -- --------------------------------------------------------
 
