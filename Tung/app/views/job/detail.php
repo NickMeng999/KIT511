@@ -58,37 +58,53 @@ include "./app/views/sidebar.php";
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-                                                <script>
-                                                    $(function(){
-                                                        $('input:radio').change(function(){
-                                                            if($(this).val() =="new") {
-                                                                $("#uploadResume").show();
-                                                            }
-                                                            else {
-                                                                $("#uploadResume").hide();
-                                                            }
-                                                        });
-                                                    });
-                                                </script>
                                                 <input type="radio" name="slider" id="radioNew" value="current" text="current"> Use Saved Resume
                                                 <br>
                                                 <input type="radio" name="slider" id="radioCurrent" value="new" text="new"> Upload New Resume
                                                 <div class="form-group">
                                                     <div id="uploadResume" style="display:none;">
-                                                        <label>Resume</label>
-                                                        <input type="file" class="hidden-resume" id="hidden-upload-input">
-                                                        <input type="text" class="form-control" id="passport-input" placeholder="Choose a file..." name="passport">
+                                                        <div class="form-group form-file-upload form-file-simple">
+                                                            <label>Resume</label>
+                                                            <input
+                                                                    type="text"
+                                                                    class="form-control inputFileVisible"
+                                                                    placeholder="Upload your resume..."
+                                                            />
+                                                            <input
+                                                                    type="file"
+                                                                    id="resume"
+                                                                    class="inputFileHidden"
+                                                                    accept=".pdf"
+                                                            />
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <label>Cover Letter</label>
-                                                        <input type="file" class="hidden-prepassport" id="hidden-upload-input">
-                                                        <input type="text" id="prepassport-input" placeholder="Choose a file..." class="form-control" name="pre-passport">
+                                                    <div class="form-group form-file-upload form-file-simple">
+                                                        <label>Cover letter</label>
+                                                        <input
+                                                                type="text"
+                                                                class="form-control inputFileVisible"
+                                                                placeholder="Choose a file..."
+                                                        />
+                                                        <input
+                                                                type="file"
+                                                                id="cover_letter"
+                                                                class="inputFileHidden"
+                                                                accept=".pdf"
+                                                        />
                                                     </div>
-                                                    <div>
+                                                    <div class="form-group form-file-upload form-file-simple">
                                                         <label>Selection Criteria</label>
-                                                        <input type="file" class="hidden-photo" id="hidden-upload-input">
-                                                        <input type="text" id="photo-input" class="form-control" placeholder="Choose a file..." name="photo">
+                                                        <input
+                                                                type="text"
+                                                                class="form-control inputFileVisible"
+                                                                placeholder="Choose a file..."
+                                                        />
+                                                        <input
+                                                                type="file"
+                                                                id="selection_criteria"
+                                                                class="inputFileHidden"
+                                                                accept=".pdf"
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,9 +114,9 @@ include "./app/views/sidebar.php";
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             Cancel
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                        <a style="color: #ffffff" onclick="uploadPdf()" class="btn btn-primary">
                                             Submit
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -120,6 +136,73 @@ include "./app/views/sidebar.php";
 </div>
 <script>
     $(document).ready(function(){
-
+        $('input:radio').change(function(){
+            if($(this).val() =="new") {
+                $("#uploadResume").show();
+            }
+            else {
+                $("#uploadResume").hide();
+            }
+        });
     });
+
+    function uploadPdf() {
+        var id = "<?php echo $_GET['id'] ?>";
+        var form_data = new FormData();
+        var resume_property = document.getElementById('resume').files[0];
+
+        if (typeof resume_property !== "undefined") {
+            var resume_name = resume_property.name;
+            var resume_extension = resume_name.split('.').pop().toLowerCase();
+            if(jQuery.inArray(resume_extension, ['pdf']) == -1){
+                alert("Invalid resume pdf file");
+            }
+            form_data.append("resume", resume_property);
+        }
+
+        var cover_letter_property = document.getElementById('cover_letter').files[0];
+        if (typeof cover_letter_property !== "undefined") {
+            var cover_letter_name = cover_letter_property.name;
+            var cover_letter_extension = cover_letter_name.split('.').pop().toLowerCase();
+            if (jQuery.inArray(cover_letter_extension, ['pdf']) == -1) {
+                alert("Invalid cover letter pdf file");
+            }
+            form_data.append("cover_letter", cover_letter_property);
+        }
+
+        var selection_criteria_property = document.getElementById('selection_criteria').files[0];
+        if (typeof selection_criteria_property !== "undefined") {
+            var selection_criteria_name = selection_criteria_property.name;
+            var selection_criteria_extension = selection_criteria_name.split('.').pop().toLowerCase();
+            if (jQuery.inArray(selection_criteria_extension, ['pdf']) == -1) {
+                alert("Invalid selection criteria pdf file");
+            }
+            form_data.append("selection_criteria", selection_criteria_property);
+        }
+
+        form_data.append("id", id);
+
+        $.ajax({
+            url:'?ctr=Job&action=uploadPdf',
+            method:'POST',
+            data:form_data,
+            contentType:false,
+            cache:false,
+            processData:false,
+            success:function(data){
+                if (data.status) {
+                    alert("Apply success");
+                    $("#myModal").modal('hide');
+                } else {
+                    var err = '';
+
+                    for (const [key, value] of Object.entries(data.err)) {
+                        err += value + "\n";
+                    }
+
+                    alert(err);
+                }
+            }
+        });
+    }
 </script>

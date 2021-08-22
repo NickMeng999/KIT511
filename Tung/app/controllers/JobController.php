@@ -107,6 +107,7 @@ class JobController
         $id = $_SESSION['staff_id'];
 
         $jobsByStaffId = JobModel::getByStaffId($id);
+        $jobTypes = JobTypeModel::getAll();
 
         ob_start();
         include "./app/views/staff/job_table.php";
@@ -183,6 +184,187 @@ class JobController
         echo json_encode([
             'status' => true
         ]);
+    }
+
+    public function uploadPdf()
+    {
+        $err = [];
+
+        if (empty($_FILES['cover_letter']['name'])) {
+            $err['cover_letter'] = 'Please upload cover letter pdf';
+        }
+
+        if (empty($_FILES['selection_criteria']['name'])) {
+            $err['selection_criteria'] = 'Please upload selection criteria pdf';
+        }
+
+        if (!empty($err)) {
+            header('Access-Control-Allow-Origin: *');
+            header('Content-type: application/json');
+            echo json_encode([
+                'status' => false,
+                'err' => $err,
+            ]);
+            exit();
+        }
+
+        $locationResume = '';
+        $locationCoverLetter = '';
+        $locationSelectionCriteria = '';
+        $data = [];
+        if($_FILES['resume']['name'] != ''){
+            $file = explode('.', $_FILES['resume']['name']);
+            $extension = end($file);
+
+            $name = 'student_job_resume_'. $_POST['id'] .'.'.$extension;
+
+            $locationResume = './app/uploads/' . $name;
+            move_uploaded_file($_FILES['resume']['tmp_name'], $locationResume);
+        }
+
+        if($_FILES['cover_letter']['name'] != ''){
+            $file = explode('.', $_FILES['cover_letter']['name']);
+            $extension = end($file);
+
+            $name = 'student_job_cover_letter_'. $_POST['id'] .'.'.$extension;
+
+            $locationCoverLetter = './app/uploads/' . $name;
+            move_uploaded_file($_FILES['cover_letter']['tmp_name'], $locationCoverLetter);
+        }
+
+        if($_FILES['selection_criteria']['name'] != ''){
+            $file = explode('.', $_FILES['selection_criteria']['name']);
+            $extension = end($file);
+
+            $name = 'student_job_selection_criteria_'. $_POST['id'] .'.'.$extension;
+
+            $locationSelectionCriteria = './app/uploads/' . $name;
+            move_uploaded_file($_FILES['selection_criteria']['tmp_name'], $locationSelectionCriteria);
+        }
+
+        $data['job_id'] = $_POST['id'];
+        $data['resume'] = $locationResume;
+        $data['cover_letter'] = $locationCoverLetter;
+        $data['selection_criteria'] = $locationSelectionCriteria;
+
+        $createStudentJob = JobModel::applyJobByStudent($data);
+
+        if ($createStudentJob) {
+            header('Access-Control-Allow-Origin: *');
+            header('Content-type: application/json');
+            echo json_encode([
+                'status' => true,
+            ]);
+            exit();
+        } else {
+            header('Access-Control-Allow-Origin: *');
+            header('Content-type: application/json');
+            echo json_encode([
+                'status' => false,
+                'err' => ['exist' => 'Students have applied for jobs'],
+            ]);
+            exit();
+        }
+    }
+
+    public function addJob()
+    {
+        $data = $_POST;
+        $err = [];
+
+        if (empty($data['title'])) {
+            $err['title'] = 'Title is required';
+        }
+        if (empty($data['country'])) {
+            $err['country'] = 'Country is required';
+        }
+        if (empty($data['job_type'])) {
+            $err['job_type'] = 'Job type is required';
+        }
+        if (empty($data['time_type'])) {
+            $err['time_type'] = 'Work type is required';
+        }
+        if (empty($data['job_category'])) {
+            $err['job_category'] = 'Job category is required';
+        }
+        if (empty($data['salary'])) {
+            $err['salary'] = 'Salary is required';
+        }
+        if (empty($data['description'])) {
+            $err['description'] = 'Description is required';
+        }
+        header('Access-Control-Allow-Origin: *');
+        header('Content-type: application/json');
+
+        if (!empty($err)) {
+            echo json_encode([
+                'status' => false,
+                'err' => $err,
+            ]);
+            exit();
+        }
+
+        JobModel::addJob($data);
+
+        echo json_encode([
+            'status' => true,
+        ]);
+        exit();
+    }
+
+    public function editJob()
+    {
+        $data = $_POST;
+        $err = [];
+
+        if (empty($data['title'])) {
+            $err['title'] = 'Title is required';
+        }
+        if (empty($data['country'])) {
+            $err['country'] = 'Country is required';
+        }
+        if (empty($data['job_type'])) {
+            $err['job_type'] = 'Job type is required';
+        }
+        if (empty($data['time_type'])) {
+            $err['time_type'] = 'Work type is required';
+        }
+        if (empty($data['job_category'])) {
+            $err['job_category'] = 'Job category is required';
+        }
+        if (empty($data['salary'])) {
+            $err['salary'] = 'Salary is required';
+        }
+        if (empty($data['description'])) {
+            $err['description'] = 'Description is required';
+        }
+        header('Access-Control-Allow-Origin: *');
+        header('Content-type: application/json');
+
+        if (!empty($err)) {
+            echo json_encode([
+                'status' => false,
+                'err' => $err,
+            ]);
+            exit();
+        }
+
+        JobModel::editJob($data);
+
+        echo json_encode([
+            'status' => true
+        ]);
+        exit();
+    }
+
+    public function removeJob()
+    {
+        JobModel::removeJob($_POST['id']);
+
+        echo json_encode([
+            'status' => true
+        ]);
+        exit();
     }
 }
 

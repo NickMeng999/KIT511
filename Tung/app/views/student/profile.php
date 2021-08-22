@@ -64,15 +64,15 @@ include "./app/views/sidebar.php";
                                 <div class="row">
                                     <div class="col-md-1 pr-1"></div>
                                     <div class="col-md-3 pr-1">
-                                        <div class="form-group">
-                                            <label>Keywords</label>
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                name="key_word"
-                                                placeholder="Enter keywords"
-                                            />
-                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Keywords</label>-->
+<!--                                            <input-->
+<!--                                                type="text"-->
+<!--                                                class="form-control"-->
+<!--                                                name="key_word"-->
+<!--                                                placeholder="Enter keywords"-->
+<!--                                            />-->
+<!--                                        </div>-->
                                     </div>
                                     <div class="col-md-3 pr-1">
                                         <div class="form-group">
@@ -466,10 +466,13 @@ include "./app/views/sidebar.php";
                                                                 />
                                                                 <input
                                                                     type="file"
+                                                                    id="file"
                                                                     class="inputFileHidden"
+                                                                    accept=".pdf"
                                                                 />
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-4" style="padding-top: 40px"><a href="" target="_blank" class="file_pdf">view resume</a></div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -550,6 +553,7 @@ include "./app/views/sidebar.php";
                                             <label>Location</label>
                                             <input type="text"
                                                    class="form-control"
+                                                   name="where_search_intern"
                                                    placeholder="Hobart,..."/>
                                         </div>
                                         <div class="form-group col-md-4" style="display: inline">
@@ -567,7 +571,7 @@ include "./app/views/sidebar.php";
                                                     <div class="card card-intern">
                                                         <div class="card-header">
                                                             <h4 class="card-title">
-                                                                <a href="job.html"><?php echo $jobIntern->title ?></a>
+                                                                <a href="?ctr=Job&action=detail&id=<?php echo $jobIntern->id ?>"><?php echo $jobIntern->title ?></a>
                                                             </h4>
                                                             <img class="img" src="<?php echo $jobIntern->image ?>"/>
                                                         </div>
@@ -655,6 +659,7 @@ include "./app/views/sidebar.php";
                     $('.description').empty();
                     $('.description').html(data.info.description);
                     $('textarea[name=about_me]').val(data.info.description);
+                    $('.file_pdf').attr("href", data.info.resume);
                 }
             }
         });
@@ -665,6 +670,33 @@ include "./app/views/sidebar.php";
 
         $("select[name=job_type_intern" ).change(function() {
             $('input[name=job_type_intern_hidden]').val($(this).val());
+        });
+
+        $('#file').change(function () {
+            var property = document.getElementById('file').files[0];
+            var file_name = property.name;
+            var file_extension = file_name.split('.').pop().toLowerCase();
+
+            if(jQuery.inArray(file_extension, ['pdf']) == -1){
+                alert("Invalid pdf file");
+            }
+
+            var form_data = new FormData();
+            form_data.append("file", property);
+            $.ajax({
+                url:'?ctr=Student&action=uploadResume',
+                method:'POST',
+                data:form_data,
+                contentType:false,
+                cache:false,
+                processData:false,
+                success:function(data){
+                    if(data.status) {
+                        $('.file_pdf').attr("href", data.resume);
+                        alert('Upload file ok!')
+                    }
+                }
+            });
         });
     });
 

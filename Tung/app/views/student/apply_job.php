@@ -33,10 +33,10 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-outline-info">
+                    <button type="button" class="btn <?php echo empty($item['resume']) ? 'btn-outline-danger' : 'btn-outline-info' ?>">
                         Resume
                     </button>
-                    <button type="button" class="btn btn-info">
+                    <button type="button" class="btn <?php echo empty($item['cover_letter']) ? 'btn-danger' : 'btn-info' ?>">
                         Cover letter
                     </button>
                 </div>

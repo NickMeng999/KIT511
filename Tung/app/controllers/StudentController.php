@@ -177,6 +177,30 @@ class StudentController
     public function notFound(){
         include './app/views/notfound.php';
     }
+
+    /**
+     * Upload resume
+     */
+    public function uploadResume()
+    {
+        if($_FILES['file']['name'] != ''){
+            $file = explode('.', $_FILES['file']['name']);
+            $extension = end($file);
+
+            $name = 'student_'. $_SESSION['student_id'] .'.'.$extension;
+
+            $location = './app/uploads/' . $name;
+            move_uploaded_file($_FILES['file']['tmp_name'], $location);
+            StudentModel::updateResumeProfile($location);
+            header('Access-Control-Allow-Origin: *');
+            header('Content-type: application/json');
+            echo json_encode([
+                'status' => true,
+                'resume' => $location,
+            ]);
+            exit();
+        }
+    }
 }
 
 ?>

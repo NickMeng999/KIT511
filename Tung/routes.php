@@ -19,6 +19,7 @@ function Call($controller, $action)
             break;
         case 'Job':
             require_once("./app/models/JobModel.php");
+            require_once("./app/models/JobTypeModel.php");
             $ctr = new JobController();
             $ctr->{$action}();
             break;
@@ -32,9 +33,9 @@ function Call($controller, $action)
 }
 
 $listCtr = [
-    "Student" => ["profile", "getDataProfile", "notFound", "login", "logout", "home", "updateProfile", "changeEducation", "removeEducation"],
+    "Student" => ["profile", "getDataProfile", "notFound", "login", "logout", "home", "updateProfile", "changeEducation", "removeEducation", "uploadResume"],
     "Staff" => ["profile", "getDataProfile", "notFound", "login", "logout", "updateProfile"],
-    "Job" => ["paginateJobs", "getByStaffId", "paginateStudentApplyJobs", "detail", "shortList", "notSuitable"],
+    "Job" => ["paginateJobs", "getByStaffId", "paginateStudentApplyJobs", "detail", "shortList", "notSuitable", "uploadPdf", "addJob", "editJob", "removeJob"],
 ];
 
 if (array_key_exists($ctr, $listCtr)) {

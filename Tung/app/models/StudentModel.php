@@ -161,6 +161,22 @@ class StudentModel
         $stmt->execute();
         return true;
     }
+
+    public static function updateResumeProfile($resume)
+    {
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+				update 	student 
+				set 	resume 		= :resume 						
+				where 	id 			= :id
+			");
+
+        $stmt->bindParam(':id', $_SESSION['student_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':resume', $resume, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    }
 }
 
 ?>

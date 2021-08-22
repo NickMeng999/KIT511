@@ -189,6 +189,8 @@ class JobModel
 				    st.experience as experience,
 				    st.work_in_australia as work_in_australia,
 				    sj.id as id,
+				    sj.cover_letter as cover_letter,
+				    st.resume as resume,
 				    j.title as title
 				from student_job as sj 
 				INNER JOIN job as j 
@@ -300,6 +302,128 @@ class JobModel
 
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
+        return true;
+    }
+
+    public static function checkStudentApplyJob($jobId)
+    {
+        $db = Db::GetInstance();
+        $stmt = $db->prepare("
+				select 	sj.id as id 
+				from student_job as sj
+				where sj.job_id = :job_id and sj.student_id = :student_id 
+			");
+
+        $stmt->bindParam(':job_id', $jobId, PDO::PARAM_INT);
+        $stmt->bindParam(':student_id', $_SESSION['student_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $rs = $stmt->rowCount();
+
+        return $rs;
+    }
+
+    public static function applyJobByStudent($data)
+    {
+        $day = date("Y-m-d");
+        $db = Db::GetInstance();
+        $data['job_id'] = (int) $data['job_id'];
+        $status = 0;
+
+        if (!self::checkStudentApplyJob($data['job_id'])) {
+            $stmt = $db->prepare("
+				insert into student_job
+					(student_id, job_id, status_approve, resume, cover_letter, selection_criteria, date_apply)
+				values
+					(:student_id, :job_id, :status_approve, :resume ,:cover_letter ,:selection_criteria , :date_apply)
+			");
+            $stmt->bindParam(':student_id', $_SESSION['student_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':job_id', $data['job_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':status_approve', $status, PDO::PARAM_INT);
+            $stmt->bindParam(':resume', $data['resume'], PDO::PARAM_STR);
+            $stmt->bindParam(':cover_letter', $data['cover_letter'], PDO::PARAM_STR);
+            $stmt->bindParam(':selection_criteria', $data['selection_criteria'], PDO::PARAM_STR);
+            $stmt->bindParam(':date_apply', $day, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function addJob($data)
+    {
+        $day = date("Y-m-d");
+        $lastDay = date('Y-m-d', strtotime($day. ' + 30 days'));
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+            insert into job
+                (staff_id, title, description, salary, country, last_date, job_type, job_category, time_type, created_at)
+            values
+                (:staff_id, :title, :description, :salary ,:country ,:last_date , :job_type, :job_category, :time_type, :created_at)
+        ");
+        $stmt->bindParam(':staff_id', $_SESSION['staff_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
+        $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+        $stmt->bindParam(':salary', $data['salary'], PDO::PARAM_STR);
+        $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR);
+        $stmt->bindParam(':last_date', $lastDay, PDO::PARAM_STR);
+        $stmt->bindParam(':job_type', $data['job_type'], PDO::PARAM_INT);
+        $stmt->bindParam(':job_category', $data['job_category'], PDO::PARAM_INT);
+        $stmt->bindParam(':time_type', $data['time_type'], PDO::PARAM_STR);
+        $stmt->bindParam(':created_at', $day, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    }
+
+    public static function editJob($data)
+    {
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+				update 	job 
+				set 	staff_id 		= :staff_id,
+				        title           = :title,
+				        description     = :description,
+				        salary     = :salary,
+				        country     = :country,
+				        job_type     = :job_type,
+				        job_category     = :job_category,
+				        time_type     = :time_type 
+				where 	id 			= :id
+			");
+
+        $stmt->bindParam(':staff_id', $_SESSION['staff_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
+        $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+        $stmt->bindParam(':salary', $data['salary'], PDO::PARAM_STR);
+        $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR);
+        $stmt->bindParam(':job_type', $data['job_type'], PDO::PARAM_INT);
+        $stmt->bindParam(':job_category', $data['job_category'], PDO::PARAM_INT);
+        $stmt->bindParam(':time_type', $data['time_type'], PDO::PARAM_STR);
+        $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    }
+
+    public static function removeJob($id)
+    {
+        $db = Db::GetInstance();
+
+        $stmt = $db->prepare("
+				delete from job 
+				where 	id 			= :id
+			");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt2 = $db->prepare("
+				delete from student_job  
+				where 	job_id 			= :id
+			");
+        $stmt2->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt2->execute();
+
         return true;
     }
 }
