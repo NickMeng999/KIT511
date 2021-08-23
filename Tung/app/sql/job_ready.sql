@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2021 at 10:20 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.31
+-- Generation Time: Aug 23, 2021 at 02:08 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,7 @@ CREATE TABLE `education` (
 --
 
 INSERT INTO `education` (`id`, `student_id`, `school`, `degree`, `field_of_study`, `grade`, `start_year`, `end_year`) VALUES
-(4, 1, 'giao thong', 'master', 'infomation techonogy', 5, 2013, 2017);
+(4, 1, 'UTAS', 'Master', 'IT', 5, 2013, 2017);
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,9 @@ INSERT INTO `job` (`id`, `staff_id`, `title`, `description`, `content`, `salary`
 (8, 1, 'Intern java', '', 'Join a leading Australian Early Education Company\r\nLead a passionate team\r\nNew and innovative centre', '300 usd', 'Campuchia', '2021-08-12', 2, 2, 'Part time', 'https://www.seek.com.au/logos/Jobseeker/Thumbnail/9218', '2021-08-07'),
 (9, 1, 'Intern php', '', 'Join a leading Australian Early Education Company\r\nLead a passionate team\r\nNew and innovative centre', '300 usd', 'Campuchia', '2021-08-12', 2, 2, 'Part time', 'https://www.seek.com.au/logos/Jobseeker/Thumbnail/9218', '2021-08-07'),
 (10, 1, 'Intern react js', '', 'Join a leading Australian Early Education Company\r\nLead a passionate team\r\nNew and innovative centre', '300 usd', 'Campuchia', '2021-08-12', 3, 2, 'Part time', 'https://www.seek.com.au/logos/Jobseeker/Thumbnail/9218', '2021-08-07'),
-(11, 1, 'Intern laravel', '', 'Join a leading Australian Early Education Company\r\nLead a passionate team\r\nNew and innovative centre', '300 usd', 'Campuchia', '2021-08-12', 2, 2, 'Part time', 'https://www.seek.com.au/logos/Jobseeker/Thumbnail/9218', '2021-08-07');
+(11, 1, 'Intern laravel', '', 'Join a leading Australian Early Education Company\r\nLead a passionate team\r\nNew and innovative centre', '300 usd', 'Campuchia', '2021-08-12', 2, 2, 'Part time', 'https://www.seek.com.au/logos/Jobseeker/Thumbnail/9218', '2021-08-07'),
+(13, 1, 'Accountant', '1', '', '111', 'Hobart', '2021-09-22', 1, 1, 'Part time', '', '2021-08-23'),
+(14, 1, 'Accountant', '1', '', '111', 'Hobart', '2021-09-22', 1, 2, 'Part time', '', '2021-08-23');
 
 -- --------------------------------------------------------
 
@@ -137,7 +139,7 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `business_name`, `business_phone`, `user_name`, `email`, `role`, `first_name`, `last_name`, `address`, `city`, `country`, `postal_code`, `description`, `password`) VALUES
-(1, 'Creative Code Inc.', '0123456744', 'thanhtungadmin', 'duy3@gmail.com', 'manager', 'Duy', 'Bui', '259 Phu Dien', 'Bac Tu Niem', 'Ha Noi', '00001', 'The best business in the world, making the best things in the world ', 'e10adc3949ba59abbe56e057f20f883e');
+(1, 'Creative Code Inc.', '0123456744', 'thanhtungadmin', 'duy3@gmail.com', 'manager', 'Duy', 'Bui', '259 Phu Dien', 'Bac Tu Niem', 'Ha Noi', '0000167', 'The best business in the world, making the best things in the world ', 'e10adc3949ba59abbe56e057f20f883e');
 
 -- --------------------------------------------------------
 
@@ -169,7 +171,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `company`, `position`, `user_name`, `password`, `email`, `first_name`, `last_name`, `address`, `city`, `country`, `postal_code`, `description`, `resume`, `experience`, `work_in_australia`) VALUES
-(1, 'sotatek', 'frontend developer', 'thanhtung123', 'e10adc3949ba59abbe56e057f20f883e', 'tung@123gmail.com', 'Tung', 'Thanh', 'Habel', 'Habel', 'Autralia', '123445', 'I am Thanh Tung.\r\nI am 25 age.', NULL, 2, 0),
+(1, 'sotatek', 'frontend developer', 'thanhtung123', 'e10adc3949ba59abbe56e057f20f883e', 'tung@123gmail.com', 'Tung', 'Thanh', 'Habel', 'Habel', 'Autraliar', '123445', 'I am Thanh Tung.\r\nI am 25 age.', './app/uploads/student_1.pdf', 2, 0),
 (2, 'bidgear', 'php developer', 'thanhtung4545', 'e10adc3949ba59abbe56e057f20f883e', 'thanhtung4545@gmail.com', 'quang', 'diu', 'Habel', 'Habel', 'Autralia', '5556', 'I am Duy.\r\nI am 25 age.', NULL, 5, 1);
 
 -- --------------------------------------------------------
@@ -253,7 +255,7 @@ ALTER TABLE `education`
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `job_type`
@@ -277,7 +279,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `student_job`
 --
 ALTER TABLE `student_job`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
