@@ -195,7 +195,7 @@ include "./app/views/sidebar.php";
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd" onclick="return false;">
+                                            <button <?php echo $_SESSION['staff_role'] != 'manager' ? 'disabled' : '' ?> class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd" onclick="return false;">
                                                 Add A Job Posting
                                             </button>
                                         </div>
@@ -405,6 +405,7 @@ include "./app/views/sidebar.php";
         var city = $('input[name=city]').val();
         var country = $('input[name=country]').val();
         var postal_code = $('input[name=postal_code]').val();
+        var description = $('textarea[name=description]').val();
 
         $.ajax({
             url: "?ctr=Staff&action=updateProfile",
@@ -419,7 +420,8 @@ include "./app/views/sidebar.php";
                 'address' : address,
                 'city' : city,
                 'country' : country,
-                'postal_code' : postal_code
+                'postal_code' : postal_code,
+                'description' : description
             } ,
             dataType : 'json',
             success: function (data) {
@@ -579,6 +581,12 @@ include "./app/views/sidebar.php";
                     }
                 }
             });
+        }
+    }
+
+    function readPdf(url) {
+        if (url) {
+            window.open(url, '_blank');
         }
     }
 </script>

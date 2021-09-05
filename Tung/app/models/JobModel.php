@@ -178,7 +178,7 @@ class JobModel
                 ON sj.job_id = j.id 
                 INNER JOIN student as st 
                 ON st.id = sj.student_id 
-				where j.staff_id = {$staffId} and sj.status_approve = 0 
+				where j.staff_id = {$staffId} 
 			";
 
         $positionStart = ($currentPage - 1) * $limit;
@@ -190,6 +190,8 @@ class JobModel
 				    st.work_in_australia as work_in_australia,
 				    sj.id as id,
 				    sj.cover_letter as cover_letter,
+				    sj.selection_criteria as selection_criteria,
+				    sj.status_approve as status_approve,
 				    st.resume as resume,
 				    j.title as title
 				from student_job as sj 
@@ -197,7 +199,7 @@ class JobModel
                 ON sj.job_id = j.id 
                 INNER JOIN student as st 
                 ON st.id = sj.student_id 
-				where j.staff_id = {$staffId} and sj.status_approve = 0 
+				where j.staff_id = {$staffId} 
 			";
 
         if (!empty($jobType)) {

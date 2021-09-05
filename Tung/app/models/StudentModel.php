@@ -145,7 +145,8 @@ class StudentModel
 						address = :address,
 						city 		= :city,
 						country		= :country,
-						postal_code 	= :postal_code
+						postal_code 	= :postal_code,
+						description 	= :description 
 				where 	id 			= :id
 			");
 
@@ -158,6 +159,7 @@ class StudentModel
         $stmt->bindParam(':city', $data['city'], PDO::PARAM_STR);
         $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR);
         $stmt->bindParam(':postal_code', $data['postal_code'], PDO::PARAM_STR);
+        $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
         $stmt->execute();
         return true;
     }

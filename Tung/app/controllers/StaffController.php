@@ -59,6 +59,7 @@ class StaffController
             if (!empty($staff)) {
                 $_SESSION["staff_name"] = $_POST['user_name'];
                 $_SESSION["staff_id"] = $staff->id;
+                $_SESSION["staff_role"] = $staff->role;
 
                 header('Access-Control-Allow-Origin: *');
                 header('Content-type: application/json');
@@ -99,6 +100,7 @@ class StaffController
         if (empty($data['city'])) $err['city'] = "City name is not empty";
         if (empty($data['country'])) $err['country'] = "Country name is not empty";
         if (empty($data['postal_code'])) $err['postal_code'] = "Postal code name is not empty";
+        if (empty($data['description'])) $err['description'] = "About your business is not empty";
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $err['email'] = "Invalid email format";

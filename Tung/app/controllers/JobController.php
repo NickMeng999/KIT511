@@ -30,7 +30,7 @@ class JobController
                 $textApply .= "<div class='card {$card}'>
                                     <div class='card-header'>
                                         <h4 class='card-title'>
-                                            <a href='job.html'>{$job->title}</a>
+                                            <a href='?ctr=Job&action=detail&id={$job->id}'>{$job->title}</a>
                                         </h4>
                                         <img class='img' src='{$job->image}'>
                                     </div>
@@ -42,13 +42,6 @@ class JobController
                                             <i class='ti-time'></i>
                                             {$job->last_date}                                                    
                                         </h6>
-                                    </div>
-                                    <hr>
-                                    <div class='card-footer'>
-                                        <div class='stats'>
-                                            <i class='now-ui-icons ui-2_favourite-28'></i>
-                                            Save
-                                        </div>
                                     </div>
                                 </div>";
 

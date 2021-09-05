@@ -132,13 +132,13 @@ include "./app/views/sidebar.php";
                                                         <?php echo $job->last_date ?>
                                                     </h6>
                                                 </div>
-                                                <hr />
-                                                <div class="card-footer">
-                                                    <div class="stats">
-                                                        <i class="now-ui-icons ui-2_favourite-28"></i>
-                                                        Save
-                                                    </div>
-                                                </div>
+<!--                                                <hr />-->
+<!--                                                <div class="card-footer">-->
+<!--                                                    <div class="stats">-->
+<!--                                                        <i class="now-ui-icons ui-2_favourite-28"></i>-->
+<!--                                                        Save-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
                                             </div>
                                             <?php }} ?>
                                         </div>
@@ -185,20 +185,20 @@ include "./app/views/sidebar.php";
                                             <div class="card-body">
                                                 <form>
                                                     <div class="row">
-                                                        <div class="col-md-5 pr-1">
-                                                            <div class="form-group">
-                                                                <label>Company (disabled)</label>
-                                                                <input
-                                                                    type="text"
-                                                                    name="company"
-                                                                    class="form-control"
-                                                                    disabled=""
-                                                                    placeholder="Company"
-                                                                    value=""
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 px-1">
+<!--                                                        <div class="col-md-5 pr-1">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <label>Company (disabled)</label>-->
+<!--                                                                <input-->
+<!--                                                                    type="text"-->
+<!--                                                                    name="company"-->
+<!--                                                                    class="form-control"-->
+<!--                                                                    disabled=""-->
+<!--                                                                    placeholder="Company"-->
+<!--                                                                    value=""-->
+<!--                                                                />-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+                                                        <div class="col-md-5 px-1">
                                                             <div class="form-group">
                                                                 <label>Username</label>
                                                                 <input
@@ -210,7 +210,7 @@ include "./app/views/sidebar.php";
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4 pl-1">
+                                                        <div class="col-md-7 pl-1">
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Email address</label>
                                                                 <input
@@ -501,27 +501,27 @@ include "./app/views/sidebar.php";
 
                                                 </p>
                                             </div>
-                                            <hr />
-                                            <div class="button-container">
-                                                <button
-                                                    href="#"
-                                                    class="btn btn-neutral btn-icon btn-round btn-lg"
-                                                >
-                                                    <i class="fab fa-facebook-square"></i>
-                                                </button>
-                                                <button
-                                                    href="#"
-                                                    class="btn btn-neutral btn-icon btn-round btn-lg"
-                                                >
-                                                    <i class="fab fa-twitter"></i>
-                                                </button>
-                                                <button
-                                                    href="#"
-                                                    class="btn btn-neutral btn-icon btn-round btn-lg"
-                                                >
-                                                    <i class="fab fa-google-plus-square"></i>
-                                                </button>
-                                            </div>
+<!--                                            <hr />-->
+<!--                                            <div class="button-container">-->
+<!--                                                <button-->
+<!--                                                    href="#"-->
+<!--                                                    class="btn btn-neutral btn-icon btn-round btn-lg"-->
+<!--                                                >-->
+<!--                                                    <i class="fab fa-facebook-square"></i>-->
+<!--                                                </button>-->
+<!--                                                <button-->
+<!--                                                    href="#"-->
+<!--                                                    class="btn btn-neutral btn-icon btn-round btn-lg"-->
+<!--                                                >-->
+<!--                                                    <i class="fab fa-twitter"></i>-->
+<!--                                                </button>-->
+<!--                                                <button-->
+<!--                                                    href="#"-->
+<!--                                                    class="btn btn-neutral btn-icon btn-round btn-lg"-->
+<!--                                                >-->
+<!--                                                    <i class="fab fa-google-plus-square"></i>-->
+<!--                                                </button>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -584,13 +584,13 @@ include "./app/views/sidebar.php";
                                                                 <?php echo $jobIntern->last_date ?>
                                                             </h6>
                                                         </div>
-                                                        <hr />
-                                                        <div class="card-footer">
-                                                            <div class="stats">
-                                                                <i class="now-ui-icons ui-2_favourite-28"></i>
-                                                                Save
-                                                            </div>
-                                                        </div>
+<!--                                                        <hr />-->
+<!--                                                        <div class="card-footer">-->
+<!--                                                            <div class="stats">-->
+<!--                                                                <i class="now-ui-icons ui-2_favourite-28"></i>-->
+<!--                                                                Save-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
                                                     </div>
                                                 <?php }} ?>
                                         </div>
@@ -810,6 +810,7 @@ include "./app/views/sidebar.php";
         var city = $('input[name=city]').val();
         var country = $('input[name=country]').val();
         var code = $('input[name=code]').val();
+        var description = $('textarea[name=about_me]').val();
 
         $.ajax({
             url: "?ctr=Student&action=updateProfile",
@@ -822,7 +823,8 @@ include "./app/views/sidebar.php";
                 'address' : address,
                 'city' : city,
                 'country' : country,
-                'postal_code' : code
+                'postal_code' : code,
+                'description' : description
             } ,
             dataType : 'json',
             success: function (data) {

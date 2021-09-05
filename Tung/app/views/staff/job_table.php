@@ -17,13 +17,13 @@ foreach ($jobsByStaffId as $job) {
     <td class="text-center"><?php echo $i ?></td>
     <td><?php echo $job->title ?></td>
     <td><?php echo $job->job_type ?></td>
-    <td class="text-center"><?php echo date('Y/m/d', strtotime($job->last_date)) ?></td>
+    <td class="text-center"><?php echo date('Y/m/d', strtotime($job->created_at)) ?></td>
     <td class="text-right"><?php echo $job->salary ?></td>
     <td class="text-right">
-        <a type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm" onclick="removeJob(<?php echo $job->id ?>)">
+        <a type="button" <?php echo $_SESSION['staff_role'] != 'manager' ? 'disabled' : '' ?> rel="tooltip" class="btn btn-info btn-icon btn-sm" onclick="removeJob(<?php echo $job->id ?>)">
             <i class="now-ui-icons ui-1_simple-remove"></i>
         </a>
-        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm" data-toggle="modal" data-target="#myModalEdit<?php echo $job->id ?>" onclick="return false;">
+        <button type="button" <?php echo $_SESSION['staff_role'] != 'manager' ? 'disabled' : '' ?> rel="tooltip" class="btn btn-success btn-icon btn-sm" data-toggle="modal" data-target="#myModalEdit<?php echo $job->id ?>" onclick="return false;">
             <i class="now-ui-icons ui-2_settings-90"></i>
         </button>
         <!-- modal for edit-->

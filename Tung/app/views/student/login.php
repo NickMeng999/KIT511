@@ -12,16 +12,15 @@ if (!isset($_SESSION["username"])) {
 
         <form style="max-width: 284px;
     margin: 0 auto;">
-            <h2>Student</h2>
-            <span id="login_err">
-        </span>
-            <div class="control-group">
+            <h3 style="font-weight: bold">Student Login</h3>
+            <span id="login_err" style="color: red"></span>
+            <div class="form-group">
                 <label for="inputUsername">Username</label>                
-                <input type="text" id="txtUsername" name="txtUsername" />
+                <input type="text" class="form-control" id="txtUsername" name="txtUsername" />
             </div>
-            <div class="control-group">
+            <div class="form-group">
                 <label for="inputPassword">Password</label>                
-                <input type="password" id="txtPassword" name="txtPassword" />                
+                <input type="password" class="form-control" id="txtPassword" name="txtPassword" />
             </div>
             <div class="form-actions">
                 <a href="javascript:void(0)" class="btn-login btn btn-block">Sign in</a>
