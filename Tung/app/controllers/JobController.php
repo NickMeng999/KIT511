@@ -99,6 +99,10 @@ class JobController
     {
         $id = $_SESSION['staff_id'];
 
+        if ($_SESSION['staff_role'] == 'super_admin') {
+            $id = null;
+        }
+
         $jobsByStaffId = JobModel::getByStaffId($id);
         $jobTypes = JobTypeModel::getAll();
 

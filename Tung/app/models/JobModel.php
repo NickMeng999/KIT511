@@ -137,8 +137,11 @@ class JobModel
 				from job as j 
 				INNER JOIN job_type as jt 
                 ON j.job_type = jt.id 
-				where j.staff_id = {$staffId} 
 			";
+
+        if (!empty($staffId)) {
+            $sql .= "where j.staff_id = {$staffId} ";
+        }
 
         $stmt = $db->prepare($sql);
         $stmt->execute();
@@ -178,7 +181,6 @@ class JobModel
                 ON sj.job_id = j.id 
                 INNER JOIN student as st 
                 ON st.id = sj.student_id 
-				where j.staff_id = {$staffId} 
 			";
 
         $positionStart = ($currentPage - 1) * $limit;
@@ -193,14 +195,20 @@ class JobModel
 				    sj.selection_criteria as selection_criteria,
 				    sj.status_approve as status_approve,
 				    st.resume as resume,
+				    sj.resume as resume2,
 				    j.title as title
 				from student_job as sj 
 				INNER JOIN job as j 
                 ON sj.job_id = j.id 
                 INNER JOIN student as st 
                 ON st.id = sj.student_id 
-				where j.staff_id = {$staffId} 
 			";
+
+        if ($_SESSION['staff_role'] !== 'super_admin') {
+            $sqlTotal .= "where j.staff_id = {$staffId} ";
+            $sql .= "where j.staff_id = {$staffId} ";
+
+        }
 
         if (!empty($jobType)) {
             $sql .= "and j.job_type in ({$jobType}) ";

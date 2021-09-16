@@ -3,6 +3,7 @@
     <?php
     if (!empty($studentApplyJobs['data'])) {
         foreach ($studentApplyJobs['data'] as $item) {
+            $resume = !empty($item['resume2']) ? $item['resume2'] : $item['resume'];
     ?>
         <div class="card card-can">
             <div class="card-header">
@@ -39,13 +40,13 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group">
-                    <button type="button" onclick="readPdf('<?php echo $item['resume'] ?>')" class="btn <?php echo empty($item['resume']) ? 'btn-outline-danger' : 'btn-outline-info' ?>">
+                    <button type="button" onclick="readPdf('<?php echo $resume ?>')" class="btn <?php echo empty($resume) ? 'btn-danger' : 'btn-info' ?>">
                         Resume
                     </button>
                     <button type="button" onclick="readPdf('<?php echo $item['cover_letter'] ?>')" class="btn <?php echo empty($item['cover_letter']) ? 'btn-danger' : 'btn-info' ?>">
                         Cover letter
                     </button>
-                    <button type="button" onclick="readPdf('<?php echo $item['selection_criteria'] ?>')" class="btn <?php echo empty($item['selection_criteria']) ? 'btn-danger' : 'btn-default' ?>">
+                    <button type="button" onclick="readPdf('<?php echo $item['selection_criteria'] ?>')" class="btn <?php echo empty($item['selection_criteria']) ? 'btn-danger' : 'btn-info' ?>">
                         Selection Criteria
                     </button>
                 </div>
