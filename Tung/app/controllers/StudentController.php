@@ -172,7 +172,7 @@ class StudentController
     {
         unset ($_SESSION["username"]);
         unset ($_SESSION["student_id"]);
-        header("location:?ctr=Student&action=home");
+        header("location:?ctr=Student&action=login");
     }
 
     public function notFound(){

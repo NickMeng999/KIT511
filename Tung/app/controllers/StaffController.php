@@ -131,7 +131,7 @@ class StaffController
     {
         unset ($_SESSION["staff_name"]);
         unset ($_SESSION["staff_id"]);
-        header("location:?ctr=Student&action=home");
+        header("location:?ctr=Student&action=login");
     }
 
     public function notFound(){

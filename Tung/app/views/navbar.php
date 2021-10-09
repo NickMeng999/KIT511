@@ -11,7 +11,6 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Home</a>
         </div>
         <button
             class="navbar-toggler"

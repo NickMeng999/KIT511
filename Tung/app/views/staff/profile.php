@@ -590,3 +590,11 @@ include "./app/views/sidebar.php";
         }
     }
 </script>
+<style>
+    .btn-danger {
+        background-color: #e17a7a;
+    }
+    .btn-info {
+        background-color: #94c0df;
+    }
+</style>

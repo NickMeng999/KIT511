@@ -12,32 +12,32 @@
                 </h4>
                 <p><?php echo $item['title'] ?></p>
             </div>
-            <div class="card-body">
-                <h6>
-                    <?php if ($item['cover_letter'] && $item['resume'] && $item['selection_criteria']): ?>
-                        <button class="btn btn-outline-success btn-round btn-icon">
-                            <i class="now-ui-icons ui-1_check"></i>
-                        </button>
-                    <?php else: ?>
-                        <button class="btn btn-outline-danger btn-round btn-icon">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                        </button>
-                    <?php endif; ?>
-                    <?php echo $item['experience'] ?> years of experience
-                </h6>
-                <h6>
-                    <?php if ($item['cover_letter'] && $item['resume'] && $item['selection_criteria']): ?>
-                    <button class="btn btn-outline-success btn-round btn-icon">
-                        <i class="now-ui-icons ui-1_check"></i>
-                    </button>
-                    <?php else: ?>
-                        <button class="btn btn-outline-danger btn-round btn-icon">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                        </button>
-                    <?php endif; ?>
-                    Right to work in Australia
-                </h6>
-            </div>
+<!--            <div class="card-body">-->
+<!--                <h6>-->
+<!--                    --><?php //if ($item['cover_letter'] && $item['resume'] && $item['selection_criteria']): ?>
+<!--                        <button class="btn btn-outline-success btn-round btn-icon">-->
+<!--                            <i class="now-ui-icons ui-1_check"></i>-->
+<!--                        </button>-->
+<!--                    --><?php //else: ?>
+<!--                        <button class="btn btn-outline-danger btn-round btn-icon">-->
+<!--                            <i class="now-ui-icons ui-1_simple-remove"></i>-->
+<!--                        </button>-->
+<!--                    --><?php //endif; ?>
+<!--                    --><?php //echo $item['experience'] ?><!-- years of experience-->
+<!--                </h6>-->
+<!--                <h6>-->
+<!--                    --><?php //if ($item['cover_letter'] && $item['resume'] && $item['selection_criteria']): ?>
+<!--                    <button class="btn btn-outline-success btn-round btn-icon">-->
+<!--                        <i class="now-ui-icons ui-1_check"></i>-->
+<!--                    </button>-->
+<!--                    --><?php //else: ?>
+<!--                        <button class="btn btn-outline-danger btn-round btn-icon">-->
+<!--                            <i class="now-ui-icons ui-1_simple-remove"></i>-->
+<!--                        </button>-->
+<!--                    --><?php //endif; ?>
+<!--                    Right to work in Australia-->
+<!--                </h6>-->
+<!--            </div>-->
             <div class="card-footer">
                 <div class="btn-group">
                     <button type="button" onclick="readPdf('<?php echo $resume ?>')" class="btn <?php echo empty($resume) ? 'btn-danger' : 'btn-info' ?>">

@@ -187,13 +187,13 @@ class JobController
     {
         $err = [];
 
-        if (empty($_FILES['cover_letter']['name'])) {
-            $err['cover_letter'] = 'Please upload cover letter pdf';
-        }
-
-        if (empty($_FILES['selection_criteria']['name'])) {
-            $err['selection_criteria'] = 'Please upload selection criteria pdf';
-        }
+//        if (empty($_FILES['cover_letter']['name'])) {
+//            $err['cover_letter'] = 'Please upload cover letter pdf';
+//        }
+//
+//        if (empty($_FILES['selection_criteria']['name'])) {
+//            $err['selection_criteria'] = 'Please upload selection criteria pdf';
+//        }
 
         if (!empty($err)) {
             header('Access-Control-Allow-Origin: *');
